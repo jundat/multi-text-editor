@@ -1,0 +1,21 @@
+<plist version="1.0">
+<dict>
+
+	<key>English</key>
+	<dict>
+		<key>Hello</key>
+		<string>That is the hello text</string>
+		<key>Intro</key>
+		<string>That is the intro text</string>
+	</dict>
+	
+	<key>Vietnamese</key>
+	<dict>
+		<key>Hello</key>
+		<string>Đây là câu xin chào</string>
+		<key>Intro</key>
+		<string>Đây là câu giới thiệu</string>
+	</dict>
+	
+</dict>
+</plist>
