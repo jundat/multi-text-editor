@@ -1,0 +1,26 @@
+[
+	{
+		"language": "Id",
+		"text":
+		{
+			"Hello": "Hello",
+			"Intro": "Intro",
+		}
+	},
+	{
+		"language": "English",
+		"text":
+		{
+			"Hello": "Hello",
+			"Intro": "Introduction",
+		}
+	},
+	{
+		"language": "Vietnamese",
+		"text":
+		{
+			"Hello": "Xin chào",
+			"Intro": "Giới thiệu",
+		}
+	}
+]
