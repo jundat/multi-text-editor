@@ -1,5 +1,13 @@
-<plist version="1.0">
+<plist>
 <dict>
+
+	<key>Id</key>
+	<dict>
+		<key>Hello</key>
+		<string>Hello</string>
+		<key>Intro</key>
+		<string>Intro</string>
+	</dict>
 
 	<key>English</key>
 	<dict>
