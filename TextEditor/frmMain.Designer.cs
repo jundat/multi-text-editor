@@ -78,7 +78,7 @@
             this.drgMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.drgMain.Location = new System.Drawing.Point(0, 28);
             this.drgMain.Name = "drgMain";
-            this.drgMain.Size = new System.Drawing.Size(851, 389);
+            this.drgMain.Size = new System.Drawing.Size(887, 291);
             this.drgMain.TabIndex = 0;
             // 
             // Id
@@ -107,7 +107,7 @@
             this.itemAbout});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(851, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(887, 28);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuMain";
             // 
@@ -145,6 +145,7 @@
             this.itemSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.itemSave.Size = new System.Drawing.Size(167, 24);
             this.itemSave.Text = "Save";
+            this.itemSave.Click += new System.EventHandler(this.itemSave_Click);
             // 
             // itemExport
             // 
@@ -169,12 +170,14 @@
             this.itemJson.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.J)));
             this.itemJson.Size = new System.Drawing.Size(163, 24);
             this.itemJson.Text = "JSON";
+            this.itemJson.Click += new System.EventHandler(this.itemJson_Click);
             // 
             // itemExit
             // 
             this.itemExit.Name = "itemExit";
             this.itemExit.Size = new System.Drawing.Size(167, 24);
             this.itemExit.Text = "Exit";
+            this.itemExit.Click += new System.EventHandler(this.itemExit_Click);
             // 
             // itemAbout
             // 
@@ -202,7 +205,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(851, 417);
+            this.ClientSize = new System.Drawing.Size(887, 319);
             this.Controls.Add(this.drgMain);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

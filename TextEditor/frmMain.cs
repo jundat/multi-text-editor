@@ -16,6 +16,40 @@ namespace TextEditor
     {
         ArrayList listLanguages;
 
+        public void refreshColumns(ArrayList checkedLanguages)
+        {
+            //Add
+            for (int i = 0; i < checkedLanguages.Count; ++i)
+            {
+                string name = (string)checkedLanguages[i];
+                if (!drgMain.Columns.Contains(name))
+                {
+                    listLanguages.Add(name);
+                    drgMain.Columns.Add(name, name);
+                }
+            }
+
+            //Remove
+            for (int i = 0; i < drgMain.Columns.Count; ++i)
+            {
+                string name = drgMain.Columns[i].Name;
+                if (name == "Id")
+                {
+                    continue;
+                }
+
+                if (!checkedLanguages.Contains(name))
+                {
+                    drgMain.Columns.Remove(name);
+                    listLanguages.Remove(name);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+
         public frmMain()
         {
             InitializeComponent();
@@ -30,6 +64,10 @@ namespace TextEditor
             drgMain.DataSource = null;
             drgMain.Rows.Clear();
             drgMain.Refresh();
+
+            listLanguages = new ArrayList();
+            listLanguages.Add("English");
+            listLanguages.Add("Vietnamese");
         }
 
         private void itemPlist_Click(object sender, EventArgs e)
@@ -80,6 +118,63 @@ namespace TextEditor
             }
         }
 
+        private void itemJson_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveDialog = new SaveFileDialog();
+            saveDialog.Filter = "JSON files (*.json)|*.json";
+            saveDialog.FilterIndex = 2;
+            saveDialog.RestoreDirectory = true;
+            saveDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            saveDialog.FileName = "language";
+            saveDialog.Title = "Export JSON";
+
+            string data = "";
+
+            if (saveDialog.ShowDialog() == DialogResult.OK)
+            {
+                string fileName = saveDialog.FileName;
+
+                //begin file
+                data += "[\n";
+
+                for (int i = 0; i < drgMain.ColumnCount; ++i)
+                {
+                    data += "\t{\n"; //language pack
+                    data += "\t\t\"language\": \"" + drgMain.Columns[i].Name + "\",\n";
+                    data += "\t\t\"text\":\n";
+                    data += "\t\t{\n"; //text
+                    for (int j = 0; j < drgMain.RowCount - 1; ++j)
+                    {
+                        DataGridViewRow row = drgMain.Rows[j];
+                        DataGridViewCell cell = row.Cells[i];
+
+                        //key
+                        DataGridViewRow nameRow = drgMain.Rows[j];
+                        data += "\t\t\t\"" + nameRow.Cells[0].Value + "\":";
+
+                        //string
+                        data += " \"" + (string)cell.Value + "\",\n";
+                    }
+                    data += "\t\t}\n"; //text
+                    data += "\t}"; //language pack
+                    if (i < drgMain.ColumnCount - 1)
+                    {
+                        data += ",\n"; //language pack
+                    }
+                    else
+                    {
+                        data += "\n"; //language pack
+                    }
+                }
+
+                //end file
+                data += "]";
+
+                //write to file
+                System.IO.File.WriteAllText(fileName, data);
+            }
+        }
+        
         private void itemOpen_Click(object sender, EventArgs e)
         {
             OpenFileDialog openDialog = new OpenFileDialog();
@@ -111,34 +206,15 @@ namespace TextEditor
             box.ShowDialog(this);
         }
 
-        public void refreshColumns(ArrayList checkedLanguages)
+        private void itemExit_Click(object sender, EventArgs e)
         {
-            //Add
-            for (int i = 0; i < checkedLanguages.Count; ++i)
-            {
-                string name = (string)checkedLanguages[i];
-                if (!drgMain.Columns.Contains(name))
-                {
-                    listLanguages.Add(name);
-                    drgMain.Columns.Add(name, name);
-                }
-            }
-
-            //Remove
-            for (int i = 0; i < drgMain.Columns.Count; ++i)
-            {
-                string name = drgMain.Columns[i].Name;
-                if (name == "Id")
-                {
-                    continue;
-                }
-
-                if (!checkedLanguages.Contains(name))
-                {
-                    drgMain.Columns.Remove(name);
-                    listLanguages.Remove(name);
-                }
-            }
+            Application.Exit();
         }
+
+        private void itemSave_Click(object sender, EventArgs e)
+        {
+            itemPlist_Click(sender, e);
+        }
+
     }
 }
