@@ -15,6 +15,39 @@ namespace TextEditor
     public partial class frmMain : Form
     {
         ArrayList listLanguages;
+        string[] droppedFiles;
+
+        public void newFile()
+        {
+            drgMain.DataSource = null;
+            drgMain.Rows.Clear();
+            drgMain.Refresh();
+
+            listLanguages = new ArrayList();
+            listLanguages.Add("English");
+            listLanguages.Add("Vietnamese");
+
+            DataTable tb = new DataTable();
+            tb.Columns.Add("Id");
+            tb.Columns.Add("English");
+            tb.Columns.Add("Vietnamese");
+            drgMain.DataSource = tb;
+        }
+
+        public void openPlistFile(string file)
+        {
+            try
+            {
+                drgMain.Columns.Clear();
+                drgMain.DataSource = Plist.Load(file);
+                drgMain.Refresh();
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show("Can not open file!");
+                newFile();
+            }
+        }
 
         public void refreshColumns(ArrayList checkedLanguages)
         {
@@ -61,13 +94,15 @@ namespace TextEditor
 
         private void itemNew_Click(object sender, EventArgs e)
         {
-            drgMain.DataSource = null;
-            drgMain.Rows.Clear();
-            drgMain.Refresh();
-
-            listLanguages = new ArrayList();
-            listLanguages.Add("English");
-            listLanguages.Add("Vietnamese");
+            DialogResult dialogResult = MessageBox.Show("Sure?", "Save before create new!", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                newFile();
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                //do something else
+            }            
         }
 
         private void itemPlist_Click(object sender, EventArgs e)
@@ -178,7 +213,7 @@ namespace TextEditor
         private void itemOpen_Click(object sender, EventArgs e)
         {
             OpenFileDialog openDialog = new OpenFileDialog();
-            openDialog.Filter = "Plist files (*.plist)|*.plist|All files (*.*)|*.*";
+            openDialog.Filter = "Plist files (*.plist)|*.plist";
             openDialog.FilterIndex = 2;
             openDialog.RestoreDirectory = true;
             openDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
@@ -187,10 +222,7 @@ namespace TextEditor
             if (openDialog.ShowDialog() == DialogResult.OK)
             {
                 string fileName = openDialog.FileName;
-
-                drgMain.Columns.Clear();
-                drgMain.DataSource = Plist.Load(fileName);
-                drgMain.Refresh();
+                openPlistFile(fileName);
             }
         }
 
@@ -214,6 +246,29 @@ namespace TextEditor
         private void itemSave_Click(object sender, EventArgs e)
         {
             itemPlist_Click(sender, e);
+        }
+
+        private void drgMain_DragEnter(object sender, DragEventArgs e)
+        {
+            Console.WriteLine("drgmain enter");
+
+            droppedFiles = (string[])e.Data.GetData(DataFormats.FileDrop);
+            foreach (string file in droppedFiles) Console.WriteLine(file);
+        }
+
+        private void drgMain_DragLeave(object sender, EventArgs e)
+        {
+            Console.WriteLine("drgmain leave");
+
+            string file = droppedFiles[0];
+            if (file.EndsWith(".plist"))
+            {
+                openPlistFile(file);
+            } 
+            else
+            {
+                MessageBox.Show("Invalid file name. It must be a .plist file!");
+            }
         }
 
     }
