@@ -44,15 +44,16 @@
             this.itemPlist = new System.Windows.Forms.ToolStripMenuItem();
             this.itemJson = new System.Windows.Forms.ToolStripMenuItem();
             this.itemExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.itemAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.itemEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.itemColumns = new System.Windows.Forms.ToolStripMenuItem();
+            this.itemAbout = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.drgMain)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // drgMain
             // 
+            this.drgMain.AllowDrop = true;
             this.drgMain.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
@@ -78,8 +79,10 @@
             this.drgMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.drgMain.Location = new System.Drawing.Point(0, 28);
             this.drgMain.Name = "drgMain";
-            this.drgMain.Size = new System.Drawing.Size(887, 291);
+            this.drgMain.Size = new System.Drawing.Size(895, 424);
             this.drgMain.TabIndex = 0;
+            this.drgMain.DragEnter += new System.Windows.Forms.DragEventHandler(this.drgMain_DragEnter);
+            this.drgMain.DragLeave += new System.EventHandler(this.drgMain_DragLeave);
             // 
             // Id
             // 
@@ -107,7 +110,7 @@
             this.itemAbout});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(887, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(895, 28);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuMain";
             // 
@@ -179,13 +182,6 @@
             this.itemExit.Text = "Exit";
             this.itemExit.Click += new System.EventHandler(this.itemExit_Click);
             // 
-            // itemAbout
-            // 
-            this.itemAbout.Name = "itemAbout";
-            this.itemAbout.Size = new System.Drawing.Size(62, 24);
-            this.itemAbout.Text = "About";
-            this.itemAbout.Click += new System.EventHandler(this.itemAbout_Click);
-            // 
             // itemEdit
             // 
             this.itemEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -197,15 +193,25 @@
             // itemColumns
             // 
             this.itemColumns.Name = "itemColumns";
-            this.itemColumns.Size = new System.Drawing.Size(152, 24);
+            this.itemColumns.ShortcutKeys = System.Windows.Forms.Keys.F10;
+            this.itemColumns.Size = new System.Drawing.Size(167, 24);
             this.itemColumns.Text = "Columns";
             this.itemColumns.Click += new System.EventHandler(this.itemColumns_Click);
             // 
+            // itemAbout
+            // 
+            this.itemAbout.Name = "itemAbout";
+            this.itemAbout.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.itemAbout.Size = new System.Drawing.Size(62, 24);
+            this.itemAbout.Text = "About";
+            this.itemAbout.Click += new System.EventHandler(this.itemAbout_Click);
+            // 
             // frmMain
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(887, 319);
+            this.ClientSize = new System.Drawing.Size(895, 452);
             this.Controls.Add(this.drgMain);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
