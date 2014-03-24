@@ -40,13 +40,11 @@
             this.itemNew = new System.Windows.Forms.ToolStripMenuItem();
             this.itemOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.itemSave = new System.Windows.Forms.ToolStripMenuItem();
-            this.itemExport = new System.Windows.Forms.ToolStripMenuItem();
-            this.itemPlist = new System.Windows.Forms.ToolStripMenuItem();
-            this.itemJson = new System.Windows.Forms.ToolStripMenuItem();
             this.itemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.itemEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.itemColumns = new System.Windows.Forms.ToolStripMenuItem();
             this.itemAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.itemSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.drgMain)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -120,7 +118,7 @@
             this.itemNew,
             this.itemOpen,
             this.itemSave,
-            this.itemExport,
+            this.itemSaveAs,
             this.itemExit});
             this.itemHome.Name = "itemHome";
             this.itemHome.Size = new System.Drawing.Size(62, 24);
@@ -130,7 +128,7 @@
             // 
             this.itemNew.Name = "itemNew";
             this.itemNew.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.itemNew.Size = new System.Drawing.Size(167, 24);
+            this.itemNew.Size = new System.Drawing.Size(219, 24);
             this.itemNew.Text = "New";
             this.itemNew.Click += new System.EventHandler(this.itemNew_Click);
             // 
@@ -138,7 +136,7 @@
             // 
             this.itemOpen.Name = "itemOpen";
             this.itemOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.itemOpen.Size = new System.Drawing.Size(167, 24);
+            this.itemOpen.Size = new System.Drawing.Size(219, 24);
             this.itemOpen.Text = "Open";
             this.itemOpen.Click += new System.EventHandler(this.itemOpen_Click);
             // 
@@ -146,39 +144,14 @@
             // 
             this.itemSave.Name = "itemSave";
             this.itemSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.itemSave.Size = new System.Drawing.Size(167, 24);
+            this.itemSave.Size = new System.Drawing.Size(219, 24);
             this.itemSave.Text = "Save";
             this.itemSave.Click += new System.EventHandler(this.itemSave_Click);
-            // 
-            // itemExport
-            // 
-            this.itemExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.itemPlist,
-            this.itemJson});
-            this.itemExport.Name = "itemExport";
-            this.itemExport.Size = new System.Drawing.Size(167, 24);
-            this.itemExport.Text = "Export";
-            // 
-            // itemPlist
-            // 
-            this.itemPlist.Name = "itemPlist";
-            this.itemPlist.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.itemPlist.Size = new System.Drawing.Size(163, 24);
-            this.itemPlist.Text = "PLIST";
-            this.itemPlist.Click += new System.EventHandler(this.itemPlist_Click);
-            // 
-            // itemJson
-            // 
-            this.itemJson.Name = "itemJson";
-            this.itemJson.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.J)));
-            this.itemJson.Size = new System.Drawing.Size(163, 24);
-            this.itemJson.Text = "JSON";
-            this.itemJson.Click += new System.EventHandler(this.itemJson_Click);
             // 
             // itemExit
             // 
             this.itemExit.Name = "itemExit";
-            this.itemExit.Size = new System.Drawing.Size(167, 24);
+            this.itemExit.Size = new System.Drawing.Size(219, 24);
             this.itemExit.Text = "Exit";
             this.itemExit.Click += new System.EventHandler(this.itemExit_Click);
             // 
@@ -205,6 +178,15 @@
             this.itemAbout.Size = new System.Drawing.Size(62, 24);
             this.itemAbout.Text = "About";
             this.itemAbout.Click += new System.EventHandler(this.itemAbout_Click);
+            // 
+            // itemSaveAs
+            // 
+            this.itemSaveAs.Name = "itemSaveAs";
+            this.itemSaveAs.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.S)));
+            this.itemSaveAs.Size = new System.Drawing.Size(219, 24);
+            this.itemSaveAs.Text = "Save As";
+            this.itemSaveAs.Click += new System.EventHandler(this.itemSaveAs_Click);
             // 
             // frmMain
             // 
@@ -234,9 +216,6 @@
         private System.Windows.Forms.ToolStripMenuItem itemHome;
         private System.Windows.Forms.ToolStripMenuItem itemNew;
         private System.Windows.Forms.ToolStripMenuItem itemSave;
-        private System.Windows.Forms.ToolStripMenuItem itemExport;
-        private System.Windows.Forms.ToolStripMenuItem itemPlist;
-        private System.Windows.Forms.ToolStripMenuItem itemJson;
         private System.Windows.Forms.ToolStripMenuItem itemExit;
         private System.Windows.Forms.ToolStripMenuItem itemAbout;
         private System.Windows.Forms.ToolStripMenuItem itemOpen;
@@ -245,6 +224,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Vietnamese;
         private System.Windows.Forms.ToolStripMenuItem itemEdit;
         private System.Windows.Forms.ToolStripMenuItem itemColumns;
+        private System.Windows.Forms.ToolStripMenuItem itemSaveAs;
     }
 }
 

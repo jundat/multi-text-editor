@@ -16,10 +16,99 @@ namespace TextEditor
     {
         ArrayList listLanguages;
         string[] droppedFiles;
+        string currentFile;
+
+        public void savePlist(string fileName)
+        {
+            string data = "";
+
+            //begin file
+            data += "<plist>\n";
+            data += "<dict>\n\n";
+
+            for (int i = 0; i < drgMain.ColumnCount; ++i)
+            {
+                data += "\t<key>" + drgMain.Columns[i].Name + "</key>\n";
+                data += "\t<dict>\n";
+                for (int j = 0; j < drgMain.RowCount - 1; ++j)
+                {
+                    DataGridViewRow row = drgMain.Rows[j];
+                    DataGridViewCell cell = row.Cells[i];
+
+                    //key
+                    DataGridViewRow nameRow = drgMain.Rows[j];
+                    data += "\t\t<key>" + nameRow.Cells[0].Value + "</key>\n";
+
+                    //string
+                    data += "\t\t<string>" + (string)cell.Value + "</string>\n";
+                }
+                data += "\t</dict>\n\n";
+            }
+
+            //end file
+            data += "</dict>\n";
+            data += "</plist>\n";
+
+            //write to file
+            StreamWriter sw = new StreamWriter(fileName);
+            sw.Write(data);
+            sw.Flush();
+            sw.Close();
+        }
+
+        public void saveJson(string fileName)
+        {
+            string data = "";
+
+            //begin file
+            data += "[\n";
+
+            for (int i = 0; i < drgMain.ColumnCount; ++i)
+            {
+                data += "\t{\n"; //language pack
+                data += "\t\t\"language\": \"" + drgMain.Columns[i].Name + "\",\n";
+                data += "\t\t\"text\":\n";
+                data += "\t\t{\n"; //text
+                for (int j = 0; j < drgMain.RowCount - 1; ++j)
+                {
+                    DataGridViewRow row = drgMain.Rows[j];
+                    DataGridViewCell cell = row.Cells[i];
+
+                    //key
+                    DataGridViewRow nameRow = drgMain.Rows[j];
+                    data += "\t\t\t\"" + nameRow.Cells[0].Value + "\":";
+
+                    //string
+                    data += " \"" + (string)cell.Value + "\",\n";
+                }
+                data += "\t\t}\n"; //text
+                data += "\t}"; //language pack
+                if (i < drgMain.ColumnCount - 1)
+                {
+                    data += ",\n"; //language pack
+                }
+                else
+                {
+                    data += "\n"; //language pack
+                }
+            }
+
+            //end file
+            data += "]";
+
+            //write to file
+            StreamWriter sw = new StreamWriter(fileName);
+            sw.Write(data);
+            sw.Flush();
+            sw.Close();
+        }
 
         public void newFile()
         {
+            currentFile = null;
+
             drgMain.DataSource = null;
+            drgMain.Columns.Clear();
             drgMain.Rows.Clear();
             drgMain.Refresh();
 
@@ -87,6 +176,8 @@ namespace TextEditor
         {
             InitializeComponent();
 
+            currentFile = null;
+
             listLanguages = new ArrayList();
             listLanguages.Add("English");
             listLanguages.Add("Vietnamese");
@@ -94,122 +185,13 @@ namespace TextEditor
 
         private void itemNew_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Sure?", "Save before create new!", MessageBoxButtons.YesNo);
+            DialogResult dialogResult = MessageBox.Show("Are you sure?", "Check!", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
                 newFile();
-            }
-            else if (dialogResult == DialogResult.No)
-            {
-                //do something else
             }            
         }
 
-        private void itemPlist_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog saveDialog = new SaveFileDialog();
-            saveDialog.Filter = "Plist files (*.plist)|*.plist";
-            saveDialog.FilterIndex = 2;
-            saveDialog.RestoreDirectory = true;
-            saveDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            saveDialog.FileName = "language";
-            saveDialog.Title = "Export Plist";
-
-            string data = "";
-
-            if (saveDialog.ShowDialog() == DialogResult.OK)
-            {
-                string fileName = saveDialog.FileName;
-
-                //begin file
-                data += "<plist>\n";
-                data += "<dict>\n\n";
-
-                for (int i = 0; i < drgMain.ColumnCount; ++i )
-                {
-                    data += "\t<key>" + drgMain.Columns[i].Name + "</key>\n";
-                    data += "\t<dict>\n";
-                    for (int j = 0; j < drgMain.RowCount - 1; ++j )
-                    {
-                        DataGridViewRow row = drgMain.Rows[j];
-                        DataGridViewCell cell =  row.Cells[i];
-
-                        //key
-                        DataGridViewRow nameRow = drgMain.Rows[j];
-                        data += "\t\t<key>" + nameRow.Cells[0].Value +"</key>\n";
-
-                        //string
-                        data += "\t\t<string>" + (string)cell.Value + "</string>\n";
-                    }
-                    data += "\t</dict>\n\n";
-                }
-
-                //end file
-                data += "</dict>\n";
-                data += "</plist>\n";
-
-                //write to file
-                System.IO.File.WriteAllText(fileName, data);
-            }
-        }
-
-        private void itemJson_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog saveDialog = new SaveFileDialog();
-            saveDialog.Filter = "JSON files (*.json)|*.json";
-            saveDialog.FilterIndex = 2;
-            saveDialog.RestoreDirectory = true;
-            saveDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            saveDialog.FileName = "language";
-            saveDialog.Title = "Export JSON";
-
-            string data = "";
-
-            if (saveDialog.ShowDialog() == DialogResult.OK)
-            {
-                string fileName = saveDialog.FileName;
-
-                //begin file
-                data += "[\n";
-
-                for (int i = 0; i < drgMain.ColumnCount; ++i)
-                {
-                    data += "\t{\n"; //language pack
-                    data += "\t\t\"language\": \"" + drgMain.Columns[i].Name + "\",\n";
-                    data += "\t\t\"text\":\n";
-                    data += "\t\t{\n"; //text
-                    for (int j = 0; j < drgMain.RowCount - 1; ++j)
-                    {
-                        DataGridViewRow row = drgMain.Rows[j];
-                        DataGridViewCell cell = row.Cells[i];
-
-                        //key
-                        DataGridViewRow nameRow = drgMain.Rows[j];
-                        data += "\t\t\t\"" + nameRow.Cells[0].Value + "\":";
-
-                        //string
-                        data += " \"" + (string)cell.Value + "\",\n";
-                    }
-                    data += "\t\t}\n"; //text
-                    data += "\t}"; //language pack
-                    if (i < drgMain.ColumnCount - 1)
-                    {
-                        data += ",\n"; //language pack
-                    }
-                    else
-                    {
-                        data += "\n"; //language pack
-                    }
-                }
-
-                //end file
-                data += "]";
-
-                //write to file
-                System.IO.File.WriteAllText(fileName, data);
-            }
-        }
-        
         private void itemOpen_Click(object sender, EventArgs e)
         {
             OpenFileDialog openDialog = new OpenFileDialog();
@@ -245,7 +227,62 @@ namespace TextEditor
 
         private void itemSave_Click(object sender, EventArgs e)
         {
-            itemPlist_Click(sender, e);
+            if (currentFile == null || currentFile.Length == 0)
+            {
+                SaveFileDialog saveDialog = new SaveFileDialog();
+                saveDialog.Filter = "Plist file (*.plist)|*.plist|Json file (*.json)|*.json";
+                saveDialog.RestoreDirectory = true;
+                saveDialog.FileName = "language";
+                saveDialog.Title = "Save File";
+                
+                if (saveDialog.ShowDialog() == DialogResult.OK)
+                {                    
+                    currentFile = saveDialog.FileName;
+                }
+            }
+
+            if (currentFile != null)
+            {
+                if (currentFile.EndsWith(".plist"))
+                {
+                    savePlist(currentFile);
+                }
+                else if (currentFile.EndsWith(".json"))
+                {
+                    saveJson(currentFile);
+                }
+                else
+                {
+                    MessageBox.Show("Choose Plist or Json");
+                }
+            }            
+        }
+
+        private void itemSaveAs_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveDialog = new SaveFileDialog();
+            saveDialog.Filter = "Plist file (*.plist)|*.plist|Json file (*.json)|*.json";
+            saveDialog.RestoreDirectory = true;
+            saveDialog.FileName = "language";
+            saveDialog.Title = "Save File";
+
+            if (saveDialog.ShowDialog() == DialogResult.OK)
+            {
+                currentFile = saveDialog.FileName;
+
+                if (currentFile.EndsWith(".plist"))
+                {
+                    savePlist(currentFile);
+                }
+                else if (currentFile.EndsWith(".json"))
+                {
+                    saveJson(currentFile);
+                }
+                else
+                {
+                    MessageBox.Show("Choose Plist or Json");
+                }
+            }
         }
 
         private void drgMain_DragEnter(object sender, DragEventArgs e)
